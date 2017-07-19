@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import pl.piomin.sonar.exception.AuthenticationException;
 import pl.piomin.sonar.exception.InvalidEntityException;
 import pl.piomin.sonar.model.Person;
 import pl.piomin.sonar.model.data.PersonRepository;
@@ -28,45 +29,51 @@ public class PersonController {
 	PersonRepository repository;
 	
 	@GetMapping
-	public Set<Person> findAll(@RequestHeader("Authorization") String auth) {
+	public Set<Person> findAll(@RequestHeader("Authorization") String auth) throws AuthenticationException {
 		logger.info("Person.findAll");
 		authService.authorize(auth);
 		return repository.findAll();
 	}
 	
 	@GetMapping("/person/lastName/{lastName}")
-	public Set<Person> findByLastName(@PathVariable("lastName") String lastName) {
+	public Set<Person> findByLastName(@PathVariable("lastName") String lastName, @RequestHeader("Authorization") String auth) throws AuthenticationException {
 		logger.info("Person.findByLastName: " + lastName);
+		authService.authorize(auth);
 		return repository.findByLastName(lastName);
 	}
 	
 	@GetMapping("/person/name/{lastName}/{firstName}")
-	public Set<Person> findByName(@PathVariable("lastName") String lastName, @PathVariable("firstName") String firstName) {
+	public Set<Person> findByName(@PathVariable("lastName") String lastName, @PathVariable("firstName") String firstName, @RequestHeader("Authorization") String auth) throws AuthenticationException {
 		logger.info("Person.findByName: " + lastName + ", " + firstName);
+		authService.authorize(auth);
 		return repository.findByName(lastName, firstName);
 	}
 	
 	@GetMapping("/person/{id}")
-	public Person findById(@PathVariable("id") Integer id) {
+	public Person findById(@PathVariable("id") Integer id, @RequestHeader("Authorization") String auth) throws AuthenticationException {
 		logger.info("Person.findById: " + id);
+		authService.authorize(auth);
 		return repository.findById(id);
 	}
 	
 	@PostMapping("/person")
-	public Person add(Person person) throws InvalidEntityException {
+	public Person add(Person person, @RequestHeader("Authorization") String auth) throws InvalidEntityException, AuthenticationException {
 		logger.info("Person.add: " + person);
+		authService.authorize(auth);
 		return repository.add(person);
 	}
 	
 	@PutMapping("/person")
-	public Person update(Person person) throws InvalidEntityException {
+	public Person update(Person person, @RequestHeader("Authorization") String auth) throws InvalidEntityException, AuthenticationException {
 		logger.info("Person.update: " + person);
+		authService.authorize(auth);
 		return repository.update(person);
 	}
 	
 	@DeleteMapping("/person")
-	public void remove(Person person) {
+	public void remove(Person person, @RequestHeader("Authorization") String auth) throws AuthenticationException {
 		logger.info("Person.remove: " + person);
+		authService.authorize(auth);
 		repository.remove(person);
 	}
 	

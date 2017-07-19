@@ -10,7 +10,10 @@ import org.springframework.context.annotation.Bean;
 
 import pl.piomin.sonar.model.Gender;
 import pl.piomin.sonar.model.Person;
+import pl.piomin.sonar.model.User;
+import pl.piomin.sonar.model.UserType;
 import pl.piomin.sonar.model.data.PersonRepository;
+import pl.piomin.sonar.model.data.UserRepository;
 
 @SpringBootApplication
 public class Application {
@@ -33,4 +36,17 @@ public class Application {
 		repository.setPersons(persons);
 		return repository;
 	}
+	
+	@Bean
+	UserRepository userRepository() {
+		UserRepository repository = new UserRepository();
+		Set<User> users = new HashSet<>();
+		users.add(new User(1, "manager", "manager", UserType.MANAGER));
+		users.add(new User(2, "admin", "admin", UserType.ADMIN));
+		users.add(new User(3, "reader", "reader", UserType.READER));
+		users.add(new User(4, "guest", "guest", UserType.GUEST));
+		repository.setUsers(users);
+		return repository;
+	}
+	
 }
