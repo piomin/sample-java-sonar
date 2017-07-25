@@ -9,11 +9,12 @@ public class Person {
 	private String lastName;
 	private Date birthDate;
 	private Gender gender;
+	private PersonCategory category;
 
 	public Person() {
-		
-	}	
-	
+
+	}
+
 	public Person(Integer id, String firstName, String lastName, Date birthDate, Gender gender) {
 		this.id = id;
 		this.firstName = firstName;
@@ -60,6 +61,14 @@ public class Person {
 
 	public void setGender(Gender gender) {
 		this.gender = gender;
+	}
+
+	public PersonCategory getCategory() {
+		return category;
+	}
+
+	public void setCategory(PersonCategory category) {
+		this.category = category;
 	}
 
 }

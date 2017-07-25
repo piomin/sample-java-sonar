@@ -23,11 +23,11 @@ public class PersonRepository {
 	}
 	
 	public Person findById(Integer id) {
-		return persons.stream().filter(it -> it.getId().equals(id)).findAny().get();
+		return persons.stream().filter(it -> it.getId() == id).findAny().get();
 	}
 	
 	public Set<Person> findByLastName(String lastName) {
-		return persons.stream().filter(it -> it.getLastName().equals(lastName)).collect(Collectors.toSet());
+		return persons.stream().filter(it -> it.getLastName() == lastName).collect(Collectors.toSet());
 	}
 	
 	public Set<Person> findByName(String lastName, String firstName) {
