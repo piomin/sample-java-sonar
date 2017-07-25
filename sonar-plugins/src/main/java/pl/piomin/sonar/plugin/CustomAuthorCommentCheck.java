@@ -21,7 +21,7 @@ public class CustomAuthorCommentCheck extends IssuableSubscriptionVisitor {
 
 	@Override
 	public List<Kind> nodesToVisit() {
-		return ImmutableList.of(Kind.CLASS);
+		return ImmutableList.of(Kind.TRIVIA);
 	}
 	@Override
 	public void visitTrivia(SyntaxTrivia syntaxTrivia) {
