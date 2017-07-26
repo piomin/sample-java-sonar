@@ -2,7 +2,7 @@ package pl.piomin.sonar.plugin;
 
 import java.util.List;
 
-import org.sonar.api.internal.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableList;
 import org.sonar.plugins.java.api.JavaCheck;
 
 public final class RulesList {

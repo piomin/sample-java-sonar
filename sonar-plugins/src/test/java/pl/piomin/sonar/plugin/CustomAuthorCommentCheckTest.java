@@ -6,7 +6,13 @@ import org.sonar.java.checks.verifier.JavaCheckVerifier;
 public class CustomAuthorCommentCheckTest {
 
 	@Test
-	public void test() {
-		JavaCheckVerifier.verify("src/test/files/CustomAuthorCommentCheck.java", new CustomAuthorCommentCheck());
+	public void testOk() {
+		JavaCheckVerifier.verifyNoIssue("src/test/files/CustomAuthorCommentCheck.java", new CustomAuthorCommentCheck());
 	}
+	
+	@Test
+	public void testFail() {
+		JavaCheckVerifier.verify("src/test/files/CustomAuthorCommentCheckFail.java", new CustomAuthorCommentCheck());
+	}
+	
 }

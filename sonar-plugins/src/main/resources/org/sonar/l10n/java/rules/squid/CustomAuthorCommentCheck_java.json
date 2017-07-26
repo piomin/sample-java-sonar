@@ -1,0 +1,13 @@
+{
+  "title": "Javadoc comment should have @author name",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "5min"
+  },
+  "tags": [
+    "style"
+  ],
+  "defaultSeverity": "Major"
+}

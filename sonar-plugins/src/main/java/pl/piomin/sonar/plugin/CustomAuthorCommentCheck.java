@@ -6,8 +6,6 @@ import org.sonar.api.internal.google.common.collect.ImmutableList;
 import org.sonar.check.Priority;
 import org.sonar.check.Rule;
 import org.sonar.plugins.java.api.IssuableSubscriptionVisitor;
-import org.sonar.plugins.java.api.tree.ClassTree;
-import org.sonar.plugins.java.api.tree.ModifiersTree;
 import org.sonar.plugins.java.api.tree.SyntaxTrivia;
 import org.sonar.plugins.java.api.tree.Tree;
 import org.sonar.plugins.java.api.tree.Tree.Kind;
@@ -19,22 +17,36 @@ import org.sonar.plugins.java.api.tree.Tree.Kind;
 		tags = {"style"})
 public class CustomAuthorCommentCheck extends IssuableSubscriptionVisitor {
 
+	private static final String MSG_NO_COMMENT = "There is no comment under class";
+	private static final String MSG_NO_AUTHOR = "There is no author inside comment";
+	
+	private Tree actualTree = null;
+	
 	@Override
 	public List<Kind> nodesToVisit() {
-		return ImmutableList.of(Kind.TRIVIA);
+		return ImmutableList.of(Kind.TRIVIA, Kind.CLASS);
 	}
+	
 	@Override
 	public void visitTrivia(SyntaxTrivia syntaxTrivia) {
-		// TODO Auto-generated method stub
-		
-		super.visitTrivia(syntaxTrivia);
+		String comment = syntaxTrivia.comment();
+		if (syntaxTrivia.column() != 0)
+			return;
+		if (comment == null) {
+			reportIssue(actualTree, MSG_NO_COMMENT);
+			return;
+		}
+		if (!comment.contains("@author")) {
+			reportIssue(actualTree, MSG_NO_AUTHOR);
+			return;
+		}
 	}
+
 	@Override
 	public void visitNode(Tree tree) {
-		ClassTree c = (ClassTree) tree;
-		System.out.println("CC" + c.toString());
-		ModifiersTree t = c.modifiers();
-		System.out.println(t.size());
+		if (tree.is(Kind.CLASS)) {
+			actualTree = tree;
+		}
 	}
 
 }
