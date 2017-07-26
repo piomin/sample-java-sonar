@@ -37,7 +37,7 @@ public class CustomRulesDefinition implements RulesDefinition {
 		NewRepository repository = context.createRepository(REPOSITORY_KEY, Java.KEY)
 				.setName("Piotr Custom Repository");
 
-		List<Class<? extends JavaCheck>> checks = RulesList.getJavaChecks();
+		List<Class> checks = RulesList.getChecks();
 		new RulesDefinitionAnnotationLoader().load(repository, Iterables.toArray(checks, Class.class));
 
 		for (Class ruleClass : checks) {

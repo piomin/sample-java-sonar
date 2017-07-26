@@ -24,7 +24,7 @@
 				<version>1.17</version>
 				<extensions>true</extensions>
 				<configuration>
-					<pluginKey>java</pluginKey>
+					<pluginKey>piotrjava</pluginKey>
 					<pluginName>PiotrCustomPlugin</pluginName>
 					<pluginDescription>For test purposes</pluginDescription>
 					<pluginClass>pl.piomin.sonar.plugin.CustomRulesPlugin</pluginClass>
