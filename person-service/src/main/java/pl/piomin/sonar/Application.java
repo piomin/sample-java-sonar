@@ -21,6 +21,10 @@ public class Application {
 	private static final int PERSON_START_INDEX = 1;
 	private static final int USER_START_INDEX = 1;
 	
+	/**
+	 * Main application method
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}

@@ -42,21 +42,21 @@ public class PersonController {
 	
 	@GetMapping("/person/lastName/{lastName}")
 	public Set<Person> findByLastName(@PathVariable("lastName") String lastName, @RequestHeader("Authorization") String auth) throws AuthenticationException {
-		logger.info("Person.findByLastName: " + lastName);
+		logger.info(() -> "Person.findByLastName: " + lastName);
 		authService.authorize(auth);
 		return repository.findByLastName(lastName);
 	}
 	
 	@GetMapping("/person/name/{lastName}/{firstName}")
 	public Set<Person> findByName(@PathVariable("lastName") String lastName, @PathVariable("firstName") String firstName, @RequestHeader("Authorization") String auth) throws AuthenticationException {
-		logger.info("Person.findByName: " + lastName + ", " + firstName);
+		logger.info(() -> "Person.findByName: " + lastName + ", " + firstName);
 		authService.authorize(auth);
 		return repository.findByName(lastName, firstName);
 	}
 	
 	@GetMapping("/person/{id}")
 	public Person findById(@PathVariable("id") Integer id, @RequestHeader("Authorization") String auth) throws AuthenticationException, EntityNotFoundException {
-		logger.info("Person.findById: " + id);
+		logger.info(() -> "Person.findById: " + id);
 		authService.authorize(auth);
 		Person p = repository.findById(id);
 		if (p != null) {
@@ -71,27 +71,27 @@ public class PersonController {
 				p.setCategory(PersonCategory.PENSIONARY);
 			return p;
 		} else {
-			throw new EntityNotFoundException("Person " + p.getId() + "nof found");
+			throw new EntityNotFoundException("Person " + id + "nof found");
 		}
 	}
 	
 	@PostMapping("/person")
 	public Person add(Person person, @RequestHeader("Authorization") String auth) throws InvalidEntityException, AuthenticationException {
-		logger.info("Person.add: " + person);
+		logger.info(() -> "Person.add: " + person);
 		authService.authorize(auth);
 		return repository.add(person);
 	}
 	
 	@PutMapping("/person")
 	public Person update(Person person, @RequestHeader("Authorization") String auth) throws InvalidEntityException, AuthenticationException {
-		logger.info("Person.update: " + person);
+		logger.info(() -> "Person.update: " + person);
 		authService.authorize(auth);
 		return repository.update(person);
 	}
 	
 	@DeleteMapping("/person")
 	public void remove(Person person, @RequestHeader("Authorization") String auth) throws AuthenticationException {
-		logger.info("Person.remove: " + person);
+		logger.info(() -> "Person.remove: " + person);
 		authService.authorize(auth);
 		repository.remove(person);
 	}

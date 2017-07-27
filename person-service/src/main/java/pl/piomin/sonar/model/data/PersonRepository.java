@@ -7,6 +7,11 @@ import java.util.stream.Collectors;
 import pl.piomin.sonar.exception.InvalidEntityException;
 import pl.piomin.sonar.model.Person;
 
+/**
+ * The class simulating repository for Person object
+ * @author minkowp
+ *
+ */
 public class PersonRepository {
 
 	private Set<Person> persons;
