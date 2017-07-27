@@ -4,7 +4,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import pl.piomin.sonar.exception.InvalidEntityException;
 import pl.piomin.sonar.model.Person;
 
 /**
@@ -44,17 +43,17 @@ public class PersonRepository {
 		return persons.stream().filter(it -> it.getLastName().equals(lastName) && it.getFirstName().equals(firstName)).collect(Collectors.toSet());
 	}
 	
-	public Person add(Person person) throws InvalidEntityException {
+	public Person add(Person person) {
 		if (person.getId() != null)
-			throw new InvalidEntityException("Id should not be set");
+			throw new IllegalArgumentException("Id should not be set");
 		person.setId(persons.size()+1);
 		persons.add(person);
 		return person;
 	}
 	
-	public Person update(Person person) throws InvalidEntityException {
+	public Person update(Person person) {
 		if (person.getId() == null)
-			throw new InvalidEntityException("Id should be set");
+			throw new IllegalArgumentException("Id should be set");
 		persons.remove(person);
 		persons.add(person);
 		return person;

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import pl.piomin.sonar.exception.AuthenticationException;
 import pl.piomin.sonar.exception.EntityNotFoundException;
-import pl.piomin.sonar.exception.InvalidEntityException;
 import pl.piomin.sonar.model.Person;
 import pl.piomin.sonar.model.PersonCategory;
 import pl.piomin.sonar.model.data.PersonRepository;
@@ -22,6 +21,11 @@ import pl.piomin.sonar.model.data.UserRepository;
 import pl.piomin.sonar.service.AuthorizationService;
 
 @RestController
+/**
+ * Main controller
+ * @author minkowp
+ *
+ */
 public class PersonController {
 
 	private static final Logger LOGGER = Logger.getLogger(PersonController.class.getName());
@@ -38,6 +42,12 @@ public class PersonController {
 	UserRepository userRepository;
 
 	@GetMapping
+	/**
+	 * Returning all persons
+	 * @param auth
+	 * @return
+	 * @throws AuthenticationException
+	 */
 	public Set<Person> findAll(@RequestHeader("Authorization") String auth) throws AuthenticationException {
 		LOGGER.info("Person.findAll");
 		authService.authorize(auth);
@@ -45,6 +55,13 @@ public class PersonController {
 	}
 
 	@GetMapping("/person/lastName/{lastName}")
+	/**
+	 * Returning all persons with lastName
+	 * @param lastName
+	 * @param auth
+	 * @return
+	 * @throws AuthenticationException
+	 */
 	public Set<Person> findByLastName(@PathVariable("lastName") String lastName,
 			@RequestHeader("Authorization") String auth) throws AuthenticationException {
 		LOGGER.info(() -> "Person.findByLastName: " + lastName);
@@ -53,6 +70,14 @@ public class PersonController {
 	}
 
 	@GetMapping("/person/name/{lastName}/{firstName}")
+	/**
+	 * Returning all persons with lastName and firstName
+	 * @param lastName
+	 * @param firstName
+	 * @param auth
+	 * @return
+	 * @throws AuthenticationException
+	 */
 	public Set<Person> findByName(@PathVariable("lastName") String lastName,
 			@PathVariable("firstName") String firstName, @RequestHeader("Authorization") String auth)
 			throws AuthenticationException {
@@ -62,6 +87,14 @@ public class PersonController {
 	}
 
 	@GetMapping("/person/{id}")
+	/**
+	 * Returning person with id
+	 * @param id
+	 * @param auth
+	 * @return
+	 * @throws AuthenticationException
+	 * @throws EntityNotFoundException
+	 */
 	public Person findById(@PathVariable("id") Integer id, @RequestHeader("Authorization") String auth)
 			throws AuthenticationException, EntityNotFoundException {
 		LOGGER.info(() -> "Person.findById: " + id);
@@ -85,22 +118,44 @@ public class PersonController {
 	}
 
 	@PostMapping("/person")
+	/**
+	 * Adding new person
+	 * @param person
+	 * @param auth
+	 * @return
+	 * @throws InvalidEntityException
+	 * @throws AuthenticationException
+	 */
 	public Person add(Person person, @RequestHeader("Authorization") String auth)
-			throws InvalidEntityException, AuthenticationException {
+			throws AuthenticationException {
 		LOGGER.info(() -> "Person.add: " + person);
 		authService.authorize(auth);
 		return repository.add(person);
 	}
 
 	@PutMapping("/person")
+	/**
+	 * Updating existing person
+	 * @param person
+	 * @param auth
+	 * @return
+	 * @throws InvalidEntityException
+	 * @throws AuthenticationException
+	 */
 	public Person update(Person person, @RequestHeader("Authorization") String auth)
-			throws InvalidEntityException, AuthenticationException {
+			throws AuthenticationException {
 		LOGGER.info(() -> "Person.update: " + person);
 		authService.authorize(auth);
 		return repository.update(person);
 	}
 
 	@DeleteMapping("/person")
+	/**
+	 * Removing person from repository
+	 * @param person
+	 * @param auth
+	 * @throws AuthenticationException
+	 */
 	public void remove(Person person, @RequestHeader("Authorization") String auth) throws AuthenticationException {
 		LOGGER.info(() -> "Person.remove: " + person);
 		authService.authorize(auth);
