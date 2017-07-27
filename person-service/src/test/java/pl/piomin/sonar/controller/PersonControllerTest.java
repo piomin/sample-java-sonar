@@ -1,40 +1,47 @@
 package pl.piomin.sonar.controller;
 
+import java.util.Set;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import pl.piomin.sonar.exception.AuthenticationException;
+import pl.piomin.sonar.exception.EntityNotFoundException;
 import pl.piomin.sonar.model.Person;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 public class PersonControllerTest {
 	
 	@Autowired
-	TestRestTemplate template;
+	PersonController controller;
 	
 	@Test
-	public void testFindById() {
-		Person p = this.template.getForObject("/person/{id}", Person.class, 1);
+	public void testFindAll() throws AuthenticationException {
+		Set<Person> p = controller.findAll("YWRtaW46YWRtaW4=");
+		Assert.assertTrue(p.size() > 0);
+	}
+	
+	@Test
+	public void testFindById() throws AuthenticationException, EntityNotFoundException {
+		Person p = controller.findById(1, "YWRtaW46YWRtaW4=");
 		Assert.assertNotNull(p);
 	}
 	
 	@Test
-	public void testFindByName() {
-		ResponseEntity<Person[]> p = this.template.getForEntity("/person/name/{lastName}/{firstName}", Person[].class, "Kalinowski", "Piotr");
-		Assert.assertTrue(p.getBody().length > 0);
+	public void testFindByName() throws AuthenticationException {
+		Set<Person> p = controller.findByName("Kalinowski", "Piotr", "YWRtaW46YWRtaW4=");
+		Assert.assertTrue(p.size() > 0);
 	}
 	
 	@Test
-	public void testFindByLastName() {
-		ResponseEntity<Person[]> p = this.template.getForEntity("/person/lastName/{lastName}", Person[].class, "Kalinowski");
-		Assert.assertTrue(p.getBody().length > 0);
+	public void testFindByLastName() throws AuthenticationException {
+		Set<Person> p = controller.findByLastName("Kalinowski", "YWRtaW46YWRtaW4=");
+		Assert.assertTrue(p.size() > 0);
 	}
 	
 }

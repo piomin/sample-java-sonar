@@ -1,5 +1,10 @@
 package pl.piomin.sonar.exception;
 
+/**
+ * Throws when user is not authenticated
+ * @author minkowp
+ *
+ */
 public class AuthenticationException extends Exception {
 
 	private static final long serialVersionUID = -756686878433120266L;

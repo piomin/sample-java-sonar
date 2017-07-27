@@ -1,5 +1,10 @@
 package pl.piomin.sonar.exception;
 
+/**
+ * Throws when entity is not found in repository
+ * @author minkowp
+ *
+ */
 public class EntityNotFoundException extends Exception {
 
 	private static final long serialVersionUID = 325184415613820299L;

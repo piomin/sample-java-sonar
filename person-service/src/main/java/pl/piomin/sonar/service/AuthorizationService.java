@@ -19,23 +19,29 @@ import pl.piomin.sonar.model.data.UserRepository;
  */
 public class AuthorizationService {
 
-	Logger logger = Logger.getLogger(AuthorizationService.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(AuthorizationService.class.getName());
 	
 	@Autowired
 	UserRepository repository;
 	
+	/**
+	 * Main authentication method
+	 * @param authHeader
+	 * @return
+	 * @throws AuthenticationException
+	 */
 	public boolean authorize(String authHeader) throws AuthenticationException {
-		String header = authHeader.replaceAll("Basic ", "");
-		header = new String(Base64Utils.decodeFromString(header));
-		logger.info(String.format("authorize: {0}", header));
+		final String tmpHeader = authHeader.replaceAll("Basic ", "");
+		final String header = new String(Base64Utils.decodeFromString(tmpHeader));
+		LOGGER.info(() -> "authorize: " + header);
 		String[] tokens = header.split(":");
 		User user = repository.findByUsername(tokens[0]);
-		if (user == null || user.getPassword() != tokens[1])
+		if (user == null || !user.getPassword().equals(tokens[1]))
 			throw new AuthenticationException("User not authenticated");
 		if (user.getType() == UserType.GUEST) {
 			throw new AuthenticationException("User not allowed to call this method"); 
 		} else {
-			logger.info("User is allowed to call this method");
+			LOGGER.info("User is allowed to call this method");
 		}
 		return true;
 	}
