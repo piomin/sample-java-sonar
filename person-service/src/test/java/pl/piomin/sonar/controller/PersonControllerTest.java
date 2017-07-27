@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import pl.piomin.sonar.model.Person;
@@ -26,14 +27,14 @@ public class PersonControllerTest {
 	
 	@Test
 	public void testFindByName() {
-		Person[] p = this.template.getForObject("/person/name/{lastName}/{firstName}", Person[].class, "Kalinowski", "Piotr");
-		Assert.assertNotNull(p);
+		ResponseEntity<Person[]> p = this.template.getForEntity("/person/name/{lastName}/{firstName}", Person[].class, "Kalinowski", "Piotr");
+		Assert.assertTrue(p.getBody().length > 0);
 	}
 	
 	@Test
 	public void testFindByLastName() {
-		Person[] p = this.template.getForObject("/person/lastName/{lastName}", Person[].class, "Kalinowski");
-		Assert.assertNotNull(p);
+		ResponseEntity<Person[]> p = this.template.getForEntity("/person/lastName/{lastName}", Person[].class, "Kalinowski");
+		Assert.assertTrue(p.getBody().length > 0);
 	}
 	
 }

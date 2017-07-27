@@ -24,7 +24,11 @@ import pl.piomin.sonar.service.AuthorizationService;
 @RestController
 public class PersonController {
 
-	Logger logger = Logger.getLogger(PersonController.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(PersonController.class.getName());
+
+	private static final int THRESHOLD_KID = 11;
+	private static final int THRESHOLD_TEENAGER = 18;
+	private static final int THRESHOLD_GROWN = 60;
 	
 	@Autowired
 	AuthorizationService authService;
@@ -32,40 +36,45 @@ public class PersonController {
 	PersonRepository repository;
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@GetMapping
 	public Set<Person> findAll(@RequestHeader("Authorization") String auth) throws AuthenticationException {
-		logger.info("Person.findAll");
+		LOGGER.info("Person.findAll");
 		authService.authorize(auth);
 		return repository.findAll();
 	}
-	
+
 	@GetMapping("/person/lastName/{lastName}")
-	public Set<Person> findByLastName(@PathVariable("lastName") String lastName, @RequestHeader("Authorization") String auth) throws AuthenticationException {
-		logger.info(() -> "Person.findByLastName: " + lastName);
+	public Set<Person> findByLastName(@PathVariable("lastName") String lastName,
+			@RequestHeader("Authorization") String auth) throws AuthenticationException {
+		LOGGER.info(() -> "Person.findByLastName: " + lastName);
 		authService.authorize(auth);
 		return repository.findByLastName(lastName);
 	}
-	
+
 	@GetMapping("/person/name/{lastName}/{firstName}")
-	public Set<Person> findByName(@PathVariable("lastName") String lastName, @PathVariable("firstName") String firstName, @RequestHeader("Authorization") String auth) throws AuthenticationException {
-		logger.info(() -> "Person.findByName: " + lastName + ", " + firstName);
+	public Set<Person> findByName(@PathVariable("lastName") String lastName,
+			@PathVariable("firstName") String firstName, @RequestHeader("Authorization") String auth)
+			throws AuthenticationException {
+		LOGGER.info(() -> "Person.findByName: " + lastName + ", " + firstName);
 		authService.authorize(auth);
 		return repository.findByName(lastName, firstName);
 	}
-	
+
 	@GetMapping("/person/{id}")
-	public Person findById(@PathVariable("id") Integer id, @RequestHeader("Authorization") String auth) throws AuthenticationException, EntityNotFoundException {
-		logger.info(() -> "Person.findById: " + id);
+	public Person findById(@PathVariable("id") Integer id, @RequestHeader("Authorization") String auth)
+			throws AuthenticationException, EntityNotFoundException {
+		LOGGER.info(() -> "Person.findById: " + id);
 		authService.authorize(auth);
 		Person p = repository.findById(id);
 		if (p != null) {
-			final int years = (int) (System.currentTimeMillis() - p.getBirthDate().getTime()) / (1000 * 60 * 60 * 24 * 365);
-			if (years < 11)
+			final int years = (int) (System.currentTimeMillis() - p.getBirthDate().getTime())
+					/ (1000 * 60 * 60 * 24 * 365);
+			if (years < THRESHOLD_KID)
 				p.setCategory(PersonCategory.KID);
-			else if (years < 18)
+			else if (years < THRESHOLD_TEENAGER)
 				p.setCategory(PersonCategory.TEENAGER);
-			else if (years < 60)
+			else if (years < THRESHOLD_GROWN)
 				p.setCategory(PersonCategory.GROWN);
 			else
 				p.setCategory(PersonCategory.PENSIONARY);
@@ -74,26 +83,28 @@ public class PersonController {
 			throw new EntityNotFoundException("Person " + id + "nof found");
 		}
 	}
-	
+
 	@PostMapping("/person")
-	public Person add(Person person, @RequestHeader("Authorization") String auth) throws InvalidEntityException, AuthenticationException {
-		logger.info(() -> "Person.add: " + person);
+	public Person add(Person person, @RequestHeader("Authorization") String auth)
+			throws InvalidEntityException, AuthenticationException {
+		LOGGER.info(() -> "Person.add: " + person);
 		authService.authorize(auth);
 		return repository.add(person);
 	}
-	
+
 	@PutMapping("/person")
-	public Person update(Person person, @RequestHeader("Authorization") String auth) throws InvalidEntityException, AuthenticationException {
-		logger.info(() -> "Person.update: " + person);
+	public Person update(Person person, @RequestHeader("Authorization") String auth)
+			throws InvalidEntityException, AuthenticationException {
+		LOGGER.info(() -> "Person.update: " + person);
 		authService.authorize(auth);
 		return repository.update(person);
 	}
-	
+
 	@DeleteMapping("/person")
 	public void remove(Person person, @RequestHeader("Authorization") String auth) throws AuthenticationException {
-		logger.info(() -> "Person.remove: " + person);
+		LOGGER.info(() -> "Person.remove: " + person);
 		authService.authorize(auth);
 		repository.remove(person);
 	}
-	
+
 }

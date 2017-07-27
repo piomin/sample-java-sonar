@@ -30,7 +30,7 @@ public class PersonRepositoryTest {
 		repository.add(new Person(10, "X", "X", new Date(), Gender.MALE));
 	}
 	
-	@Test
+	@Test(expected = InvalidEntityException.class)
 	public void updateOkTest() throws InvalidEntityException {
 		repository.add(new Person(7, "X", "X", new Date(), Gender.MALE));
 	}
