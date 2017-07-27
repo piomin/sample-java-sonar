@@ -1,9 +1,15 @@
 package pl.piomin.sonar.model.data;
 
+import java.util.Optional;
 import java.util.Set;
 
 import pl.piomin.sonar.model.User;
 
+/**
+ * The class simulating repository for User object
+ * @author minkowp
+ *
+ */
 public class UserRepository {
 
 	private Set<User> users;
@@ -21,11 +27,19 @@ public class UserRepository {
 	}
 
 	public User findById(Integer id) {
-		return users.stream().filter(it -> it.getId().equals(id)).findAny().get();
+		Optional<User> optUser =  users.stream().filter(it -> it.getId().equals(id)).findAny();
+		if (optUser.isPresent())
+			return optUser.get();
+		else
+			return null;
 	}
 
 	public User findByUsername(String username) {
-		return users.stream().filter(it -> it.getUsername().equals(username)).findAny().get();
+		Optional<User> optUser =  users.stream().filter(it -> it.getUsername().equals(username)).findAny();
+		if (optUser.isPresent())
+			return optUser.get();
+		else
+			return null;
 	}
 
 }

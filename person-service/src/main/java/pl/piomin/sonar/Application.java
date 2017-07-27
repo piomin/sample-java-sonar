@@ -18,6 +18,13 @@ import pl.piomin.sonar.model.data.UserRepository;
 @SpringBootApplication
 public class Application {
 
+	private static final int PERSON_START_INDEX = 1;
+	private static final int USER_START_INDEX = 1;
+	
+	/**
+	 * Main application method
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
@@ -26,13 +33,20 @@ public class Application {
 	PersonRepository repository() {
 		PersonRepository repository = new PersonRepository();
 		Set<Person> persons = new HashSet<>();
-		persons.add(new Person(1, "Adam", "Malinowski", new Date(), Gender.MALE));
-		persons.add(new Person(2, "Tomasz", "Janowski", new Date(), Gender.MALE));
-		persons.add(new Person(3, "Anna", "Markowska", new Date(), Gender.FEMALE));
-		persons.add(new Person(4, "Piotr", "Kalinowski", new Date(), Gender.MALE));
-		persons.add(new Person(5, "Łukasz", "Zieliński", new Date(), Gender.MALE));
-		persons.add(new Person(6, "Urszula", "Zakrzewska", new Date(), Gender.FEMALE));
-		persons.add(new Person(7, "Paweł", "Tarnowski", new Date(), Gender.MALE));
+		int i = PERSON_START_INDEX;
+		persons.add(new Person(i, "Adam", "Malinowski", new Date(), Gender.MALE));
+		i++;
+		persons.add(new Person(i, "Tomasz", "Janowski", new Date(), Gender.MALE));
+		i++;
+		persons.add(new Person(i, "Anna", "Markowska", new Date(), Gender.FEMALE));
+		i++;
+		persons.add(new Person(i, "Piotr", "Kalinowski", new Date(), Gender.MALE));
+		i++;
+		persons.add(new Person(i, "Łukasz", "Zieliński", new Date(), Gender.MALE));
+		i++;
+		persons.add(new Person(i, "Urszula", "Zakrzewska", new Date(), Gender.FEMALE));
+		i++;
+		persons.add(new Person(i, "Paweł", "Tarnowski", new Date(), Gender.MALE));
 		repository.setPersons(persons);
 		return repository;
 	}
@@ -41,10 +55,14 @@ public class Application {
 	UserRepository userRepository() {
 		UserRepository repository = new UserRepository();
 		Set<User> users = new HashSet<>();
-		users.add(new User(1, "manager", "manager", UserType.MANAGER));
-		users.add(new User(2, "admin", "admin", UserType.ADMIN));
-		users.add(new User(3, "reader", "reader", UserType.READER));
-		users.add(new User(4, "guest", "guest", UserType.GUEST));
+		int i = USER_START_INDEX;
+		users.add(new User(i, "manager", "manager", UserType.MANAGER));
+		i++;
+		users.add(new User(i, "admin", "admin", UserType.ADMIN));
+		i++;
+		users.add(new User(i, "reader", "reader", UserType.READER));
+		i++;
+		users.add(new User(i, "guest", "guest", UserType.GUEST));
 		repository.setUsers(users);
 		return repository;
 	}

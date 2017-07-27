@@ -1,5 +1,10 @@
 package pl.piomin.sonar.exception;
 
+/**
+ * Throws wen entity is invalid
+ * @author minkowp
+ *
+ */
 public class InvalidEntityException extends Exception {
 
 	private static final long serialVersionUID = 325184415613820299L;

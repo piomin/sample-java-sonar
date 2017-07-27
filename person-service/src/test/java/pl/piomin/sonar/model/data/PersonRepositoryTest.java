@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import pl.piomin.sonar.exception.InvalidEntityException;
 import pl.piomin.sonar.model.Gender;
 import pl.piomin.sonar.model.Person;
 
@@ -21,17 +20,17 @@ public class PersonRepositoryTest {
 	PersonRepository repository;
 	
 	@Test
-	public void addOkTest() throws InvalidEntityException {
+	public void addOkTest() {
 		repository.add(new Person(null, "X", "X", new Date(), Gender.MALE));
 	}
 	
-	@Test(expected = InvalidEntityException.class)
-	public void addFailedTest() throws InvalidEntityException {
+	@Test(expected = IllegalArgumentException.class)
+	public void addFailedTest() {
 		repository.add(new Person(10, "X", "X", new Date(), Gender.MALE));
 	}
 	
-	@Test
-	public void updateOkTest() throws InvalidEntityException {
+	@Test(expected = IllegalArgumentException.class)
+	public void updateOkTest() {
 		repository.add(new Person(7, "X", "X", new Date(), Gender.MALE));
 	}
 	
