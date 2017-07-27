@@ -1,5 +1,6 @@
 package pl.piomin.sonar.model.data;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -23,11 +24,15 @@ public class PersonRepository {
 	}
 	
 	public Person findById(Integer id) {
-		return persons.stream().filter(it -> it.getId() == id).findAny().get();
+		Optional<Person> optPerson = persons.stream().filter(it -> it.getId().equals(id)).findAny();
+		if (optPerson.isPresent())
+			return optPerson.get();
+		else
+			return null;
 	}
 	
 	public Set<Person> findByLastName(String lastName) {
-		return persons.stream().filter(it -> it.getLastName() == lastName).collect(Collectors.toSet());
+		return persons.stream().filter(it -> it.getLastName().equals(lastName)).collect(Collectors.toSet());
 	}
 	
 	public Set<Person> findByName(String lastName, String firstName) {

@@ -21,11 +21,17 @@ public class AuthorizationService {
 	public boolean authorize(String authHeader) throws AuthenticationException {
 		String header = authHeader.replaceAll("Basic ", "");
 		header = new String(Base64Utils.decodeFromString(header));
-		logger.info("authorize: " + header);
+		logger.info(String.format("authorize: {0}", header));
 		String[] tokens = header.split(":");
 		User user = repository.findByUsername(tokens[0]);
 		if (user == null || user.getPassword() != tokens[1])
 			throw new AuthenticationException("User not authenticated");
+		switch (user.getType()) {
+		case GUEST:
+			throw new AuthenticationException("User not allowed to call this method"); 
+		default:
+			logger.info("User is allowed to call this method");
+		}
 		return true;
 	}
 	
