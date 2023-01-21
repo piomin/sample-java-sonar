@@ -11,7 +11,7 @@
 
 	<properties>
 		<sonar.moduleKey>${artifactId}</sonar.moduleKey>
-		<sonar.version>6.4</sonar.version>
+		<sonar.version>7.4</sonar.version>
 		<java.plugin.version>4.7.1.9272</java.plugin.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
