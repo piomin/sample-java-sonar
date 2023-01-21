@@ -10,6 +10,7 @@
 	<packaging>sonar-plugin</packaging>
 
 	<properties>
+		<sonar.moduleKey>${artifactId}</sonar.moduleKey>
 		<sonar.version>6.4</sonar.version>
 		<java.plugin.version>4.7.1.9272</java.plugin.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -31,6 +32,25 @@
 					<sonarLintSupported>true</sonarLintSupported>
 					<sonarQubeMinVersion>6.0</sonarQubeMinVersion>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.8</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
