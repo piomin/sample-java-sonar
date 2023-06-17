@@ -8,7 +8,9 @@ import java.util.Locale;
 
 import javax.annotation.Nullable;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.sonar.api.internal.google.common.collect.Iterables;
+import org.sonar.api.internal.google.common.io.Resources;
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.debt.DebtRemediationFunction;
@@ -16,13 +18,9 @@ import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinitionAnnotationLoader;
 import org.sonar.api.utils.AnnotationUtils;
 import org.sonar.check.Cardinality;
-import org.sonar.plugins.java.Java;
+import org.sonar.java.annotations.VisibleForTesting;
 import org.sonar.plugins.java.api.JavaCheck;
-import org.sonar.squidbridge.annotations.RuleTemplate;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.Iterables;
-import com.google.common.io.Resources;
 import com.google.gson.Gson;
 
 public class CustomRulesDefinition implements RulesDefinition {
@@ -34,7 +32,7 @@ public class CustomRulesDefinition implements RulesDefinition {
 
 	@Override
 	public void define(Context context) {
-		NewRepository repository = context.createRepository(REPOSITORY_KEY, Java.KEY)
+		NewRepository repository = context.createRepository(REPOSITORY_KEY, "Java")
 				.setName("Piotr Custom Repository");
 
 		List<Class> checks = RulesList.getChecks();
@@ -63,21 +61,23 @@ public class CustomRulesDefinition implements RulesDefinition {
 		}
 		ruleMetadata(ruleClass, rule);
 
-		rule.setTemplate(AnnotationUtils.getAnnotation(ruleClass, RuleTemplate.class) != null);
-		if (ruleAnnotation.cardinality() == Cardinality.MULTIPLE) {
-			throw new IllegalArgumentException(
-					"Cardinality is not supported, use the RuleTemplate annotation instead for " + ruleClass);
-		}
+		// TODO - reconsider
+//		rule.setTemplate(AnnotationUtils.getAnnotation(ruleClass, RuleTemplate.class) != null);
+//		if (ruleAnnotation.cardinality() == Cardinality.MULTIPLE) {
+//			throw new IllegalArgumentException(
+//					"Cardinality is not supported, use the RuleTemplate annotation instead for " + ruleClass);
+//		}
 	}
 
 	private String ruleMetadata(Class<?> ruleClass, NewRule rule) {
 		String metadataKey = rule.key();
-		org.sonar.java.RspecKey rspecKeyAnnotation = AnnotationUtils.getAnnotation(ruleClass,
-				org.sonar.java.RspecKey.class);
-		if (rspecKeyAnnotation != null) {
-			metadataKey = rspecKeyAnnotation.value();
-			rule.setInternalKey(metadataKey);
-		}
+		// TODO - reconsider
+//		org.sonar.java.RspecKey rspecKeyAnnotation = AnnotationUtils.getAnnotation(ruleClass,
+//				org.sonar.java.RspecKey.class);
+//		if (rspecKeyAnnotation != null) {
+//			metadataKey = rspecKeyAnnotation.value();
+//			rule.setInternalKey(metadataKey);
+//		}
 		addHtmlDescription(rule, metadataKey);
 		addMetadata(rule, metadataKey);
 		return metadataKey;

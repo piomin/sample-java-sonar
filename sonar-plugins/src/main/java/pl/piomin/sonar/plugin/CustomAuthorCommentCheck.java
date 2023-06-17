@@ -30,8 +30,9 @@ public class CustomAuthorCommentCheck extends IssuableSubscriptionVisitor {
 	@Override
 	public void visitTrivia(SyntaxTrivia syntaxTrivia) {
 		String comment = syntaxTrivia.comment();
-		if (syntaxTrivia.column() != 0)
-			return;
+		// TODO - reconsider
+//		if (syntaxTrivia.column() != 0)
+//			return;
 		if (comment == null) {
 			reportIssue(actualTree, MSG_NO_COMMENT);
 			return;

@@ -12,9 +12,9 @@
 	<properties>
 		<sonar.moduleKey>${artifactId}</sonar.moduleKey>
 		<sonar.version>7.4</sonar.version>
-		<java.plugin.version>4.7.1.9272</java.plugin.version>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<java.plugin.version>7.20.0.31692</java.plugin.version>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
 	</properties>
 
 	<build>
