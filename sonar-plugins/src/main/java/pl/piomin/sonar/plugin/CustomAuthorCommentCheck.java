@@ -1,14 +1,13 @@
 package pl.piomin.sonar.plugin;
 
-import java.util.List;
-
-import org.sonar.api.internal.google.common.collect.ImmutableList;
 import org.sonar.check.Priority;
 import org.sonar.check.Rule;
 import org.sonar.plugins.java.api.IssuableSubscriptionVisitor;
 import org.sonar.plugins.java.api.tree.SyntaxTrivia;
 import org.sonar.plugins.java.api.tree.Tree;
 import org.sonar.plugins.java.api.tree.Tree.Kind;
+
+import java.util.List;
 
 @Rule(key = "CustomAuthorCommentCheck",
 		name = "Javadoc comment should have @author name",
@@ -24,7 +23,7 @@ public class CustomAuthorCommentCheck extends IssuableSubscriptionVisitor {
 	
 	@Override
 	public List<Kind> nodesToVisit() {
-		return ImmutableList.of(Kind.TRIVIA, Kind.CLASS);
+		return List.of(Kind.TRIVIA, Kind.CLASS);
 	}
 	
 	@Override

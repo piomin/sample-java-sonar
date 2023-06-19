@@ -1,26 +1,29 @@
 package pl.piomin.sonar.plugin;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.sonar.api.internal.google.common.collect.ImmutableList;
 import org.sonar.plugins.java.api.JavaCheck;
 
 public final class RulesList {
 
-	private RulesList() {
-		
-	}
+    private RulesList() {
 
-	@SuppressWarnings("rawtypes")
-	public static List<Class> getChecks() {
-		return ImmutableList.<Class>builder().addAll(getJavaChecks()).addAll(getJavaTestChecks()).build();
-	}
+    }
 
-	public static List<Class<? extends JavaCheck>> getJavaTestChecks() {
-		return ImmutableList.<Class<? extends JavaCheck>>builder().build();
-	}
+    @SuppressWarnings("rawtypes")
+    public static List<Class> getChecks() {
+        List<Class> l = new ArrayList<>();
+        l.addAll(getJavaChecks());
+        l.addAll(getJavaTestChecks());
+        return l;
+    }
 
-	public static List<Class<? extends JavaCheck>> getJavaChecks() {
-		return ImmutableList.<Class<? extends JavaCheck>>builder().add(CustomAuthorCommentCheck.class).build();
-	}
+    public static List<Class<? extends JavaCheck>> getJavaTestChecks() {
+        return List.of();
+    }
+
+    public static List<Class<? extends JavaCheck>> getJavaChecks() {
+        return List.of(CustomAuthorCommentCheck.class);
+    }
 }
