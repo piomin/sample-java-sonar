@@ -31,7 +31,7 @@ public class AuthorizationService {
      * @throws AuthenticationException
      */
     public boolean authorize(String authHeader) throws AuthenticationException {
-        final String tmpHeader = authHeader.replaceAll("Basic ", "");
+        final String tmpHeader = authHeader.replace("Basic ", "");
         final String header = new String(Base64.getDecoder().decode(tmpHeader));
         LOGGER.info(() -> "authorize: " + header);
         String[] tokens = header.split(":");
