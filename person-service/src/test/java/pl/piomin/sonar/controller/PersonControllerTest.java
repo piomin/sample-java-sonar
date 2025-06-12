@@ -20,44 +20,46 @@ public class PersonControllerTest {
     @Autowired
     PersonController controller;
 
+    private static final String AUTH_HEADER = "YWRtaW46YWRtaW4=";
+
     @Test
     public void testFindAll() throws AuthenticationException {
-        Set<Person> p = controller.findAll("YWRtaW46YWRtaW4=");
-        assertTrue(p.size() > 0);
+        Set<Person> p = controller.findAll(AUTH_HEADER);
+        assertTrue(!p.isEmpty());
     }
 
     @Test
     public void testFindById() throws AuthenticationException, EntityNotFoundException {
-        Person p = controller.findById(1, "YWRtaW46YWRtaW4=");
+        Person p = controller.findById(1, AUTH_HEADER);
         assertNotNull(p);
     }
 
     @Test
     public void testFindByName() throws AuthenticationException {
-        Set<Person> p = controller.findByName("Kalinowski", "Piotr", "YWRtaW46YWRtaW4=");
-        assertTrue(p.size() > 0);
+        Set<Person> p = controller.findByName("Kalinowski", "Piotr", AUTH_HEADER);
+        assertTrue(!p.isEmpty());
     }
 
     @Test
     public void testFindByLastName() throws AuthenticationException {
-        Set<Person> p = controller.findByLastName("Kalinowski", "YWRtaW46YWRtaW4=");
-        assertTrue(p.size() > 0);
+        Set<Person> p = controller.findByLastName("Kalinowski", AUTH_HEADER);
+        assertTrue(!p.isEmpty());
     }
 
     @Test
     public void testAdd() throws AuthenticationException {
-        Person p = controller.add(new Person(null, "X", "X", new Date(), Gender.MALE), "YWRtaW46YWRtaW4=");
+        Person p = controller.add(new Person(null, "X", "X", new Date(), Gender.MALE), AUTH_HEADER);
         assertNotNull(p.getId());
     }
 
     @Test
     public void testUpdate() throws AuthenticationException {
-        controller.update(new Person(1, "X", "X", new Date(), Gender.MALE), "YWRtaW46YWRtaW4=");
+        controller.update(new Person(1, "X", "X", new Date(), Gender.MALE), AUTH_HEADER);
     }
 
     @Test
     public void testRemove() throws AuthenticationException {
-        controller.remove(new Person(2, null, null, null, null), "YWRtaW46YWRtaW4=");
+        controller.remove(new Person(2, null, null, null, null), AUTH_HEADER);
     }
 
 }
