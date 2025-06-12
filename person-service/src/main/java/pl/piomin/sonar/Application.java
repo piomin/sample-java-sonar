@@ -34,14 +34,13 @@ public class Application {
     PersonRepository repository() {
         PersonRepository repository = new PersonRepository();
         Set<Person> persons = new HashSet<>();
-        int i = PERSON_START_INDEX;
-        persons.add(new Person(i++, "Adam", "Malinowski", new Date(), Gender.MALE));
-        persons.add(new Person(i++, "Tomasz", "Janowski", new Date(), Gender.MALE));
-        persons.add(new Person(i++, "Anna", "Markowska", new Date(), Gender.FEMALE));
-        persons.add(new Person(i++, "Piotr", "Kalinowski", new Date(), Gender.MALE));
-        persons.add(new Person(i++, "Łukasz", "Zieliński", new Date(), Gender.MALE));
-        persons.add(new Person(i++, "Urszula", "Zakrzewska", new Date(), Gender.FEMALE));
-        persons.add(new Person(i++, "Paweł", "Tarnowski", new Date(), Gender.MALE));
+        persons.add(new Person(PERSON_START_INDEX, "Adam", "Malinowski", new Date(), Gender.MALE));
+        persons.add(new Person(PERSON_START_INDEX + 1, "Tomasz", "Janowski", new Date(), Gender.MALE));
+        persons.add(new Person(PERSON_START_INDEX + 2, "Anna", "Markowska", new Date(), Gender.FEMALE));
+        persons.add(new Person(PERSON_START_INDEX + 3, "Piotr", "Kalinowski", new Date(), Gender.MALE));
+        persons.add(new Person(PERSON_START_INDEX + 4, "Łukasz", "Zieliński", new Date(), Gender.MALE));
+        persons.add(new Person(PERSON_START_INDEX + 5, "Urszula", "Zakrzewska", new Date(), Gender.FEMALE));
+        persons.add(new Person(PERSON_START_INDEX + 6, "Paweł", "Tarnowski", new Date(), Gender.MALE));
         repository.setPersons(persons);
         return repository;
     }
@@ -50,11 +49,10 @@ public class Application {
     UserRepository userRepository() {
         UserRepository repository = new UserRepository();
         Set<User> users = new HashSet<>();
-        int i = USER_START_INDEX;
-        users.add(new User(i++, "manager", "manager", UserType.MANAGER));
-        users.add(new User(i++, "admin", "admin", UserType.ADMIN));
-        users.add(new User(i++, "reader", "reader", UserType.READER));
-        users.add(new User(i++, "guest", "guest", UserType.GUEST));
+        users.add(new User(USER_START_INDEX, "manager", "manager", UserType.MANAGER));
+        users.add(new User(USER_START_INDEX + 1, "admin", "admin", UserType.ADMIN));
+        users.add(new User(USER_START_INDEX + 2, "reader", "reader", UserType.READER));
+        users.add(new User(USER_START_INDEX + 3, "guest", "guest", UserType.GUEST));
         repository.setUsers(users);
         return repository;
     }
